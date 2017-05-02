@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.javayuan.app.mapper.AppFindMapper">
+  <resultMap id="BaseResultMap" type="cn.javayuan.app.entity.AppFind">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="find_id" jdbcType="VARCHAR" property="findId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="location_name" jdbcType="VARCHAR" property="locationName" />
+    <result column="location_map" jdbcType="VARCHAR" property="locationMap" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="address_name" jdbcType="VARCHAR" property="addressName" />
+    <result column="address_map" jdbcType="VARCHAR" property="addressMap" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="find_time" jdbcType="VARCHAR" property="findTime" />
+    <result column="attention" jdbcType="VARCHAR" property="attention" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="gap" jdbcType="INTEGER" property="gap" />
+    <result column="app_user_id" jdbcType="INTEGER" property="appUserId" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+</mapper>

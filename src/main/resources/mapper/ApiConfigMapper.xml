@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.javayuan.app.mapper.ApiConfigMapper">
+  <resultMap id="BaseResultMap" type="cn.javayuan.app.entity.ApiConfig">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="api_name" jdbcType="VARCHAR" property="apiName" />
+    <result column="api_key" jdbcType="VARCHAR" property="apiKey" />
+    <result column="api_value" jdbcType="VARCHAR" property="apiValue" />
+    <result column="api_type" jdbcType="VARCHAR" property="apiType" />
+  </resultMap>
+</mapper>

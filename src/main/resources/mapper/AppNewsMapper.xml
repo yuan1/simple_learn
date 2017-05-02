@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.javayuan.app.mapper.AppNewsMapper">
+  <resultMap id="BaseResultMap" type="cn.javayuan.app.entity.AppNews">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="brief" jdbcType="VARCHAR" property="brief" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="breviary" jdbcType="VARCHAR" property="breviary" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="laud" jdbcType="VARCHAR" property="laud" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="creat_time" jdbcType="VARCHAR" property="creatTime" />
+  </resultMap>
+</mapper>

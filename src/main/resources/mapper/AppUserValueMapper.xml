@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.javayuan.app.mapper.AppUserValueMapper">
+    <resultMap id="BaseResultMap" type="cn.javayuan.app.entity.AppUserValue">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="app_user_id" jdbcType="INTEGER" property="appUserId"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="user_value" jdbcType="VARCHAR" property="userValue"/>
+    </resultMap>
+    <select id="selectValueDistinct" resultType="string">
+        SELECT DISTINCT user_value
+        FROM
+            app_user_value
+        WHERE
+            name = #{name}
+            AND app_user_id = #{userId}
+        ORDER BY create_time DESC
+    </select>
+    <select id="selectUserIdDistinct" resultType="string">
+        SELECT DISTINCT app_user_id
+        FROM
+        app_user_value
+        WHERE
+        name = #{name}
+        AND user_value = #{userValue}
+        ORDER BY create_time DESC
+    </select>
+
+
+    <select id="selectTopCreate" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            app_user_value
+        WHERE
+            name = #{name}
+            AND user_value = #{userValue}
+            AND app_user_id = #{userId}
+            AND create_time IN (
+                SELECT
+                    MAX(create_time)
+                FROM
+                    app_user_value
+                WHERE
+                    name = #{name}
+                    AND app_user_id = #{userId}
+                    AND user_value = #{userValue}
+            )
+    </select>
+    <select id="selectTopCreateRe" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        app_user_value
+        WHERE
+        name = #{name}
+        AND app_user_id  = #{userValue}
+        AND user_value= #{userId}
+        AND create_time IN (
+        SELECT
+        MAX(create_time)
+        FROM
+        app_user_value
+        WHERE
+        name = #{name}
+        AND user_value = #{userId}
+        AND app_user_id = #{userValue}
+        )
+    </select>
+</mapper>

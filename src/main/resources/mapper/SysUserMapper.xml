@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.javayuan.system.mapper.SysUserMapper">
+  <resultMap id="BaseResultMap" type="cn.javayuan.system.entity.SysUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="usercode" jdbcType="VARCHAR" property="usercode" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="locked" jdbcType="INTEGER" property="locked" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="idcard" jdbcType="VARCHAR" property="idcard" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <delete id="deleteUserByRoleIds">
+    DELETE FROM sys_user
+    WHERE id IN (
+            SELECT sys_user_id FROM sys_user_role
+      WHERE sys_role_id=#{roleid}
+    )
+  </delete>
+  <delete id="deleteUserByDeptIds">
+    DELETE FROM sys_user
+    WHERE id IN (
+    SELECT sys_user_id FROM sys_user_dept
+    WHERE sys_dept_id=#{deptid}
+    )
+  </delete>
+  <select id="selectSysUserByDeptId" parameterType="integer" resultMap="BaseResultMap">
+    SELECT * FROM sys_user
+    WHERE id IN (
+      SELECT sys_user_id FROM sys_user_dept
+      WHERE sys_dept_id=#{deptid}
+    )
+    ORDER BY sort
+  </select>
+</mapper>

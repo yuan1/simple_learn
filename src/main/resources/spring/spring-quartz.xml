@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+    <!-- 要调用的工作类 -->
+    <bean id="quartzJob" class="cn.javayuan.wechat.quartz.QuartzJob"/>
+    <!-- 定义调用对象和调用对象的方法 -->
+    <bean id="jobtaskForToken"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="concurrent" value="false" />
+        <!-- 调用的类 -->
+        <property name="targetObject" ref="quartzJob"/>
+        <!-- 调用类中的方法 -->
+        <property name="targetMethod" value="workForToken"/>
+
+
+    </bean>
+
+    <!-- 定义simpleTrigger触发器 -->
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="jobtaskForToken"/>
+        <property name="startDelay" value="5000"/><!--initial delay of 1 second -->
+        <property name="repeatInterval" value="3600000"/><!--一小时执行一次-->
+    </bean>
+    <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+    <bean id="startQuertz" lazy-init="false" autowire="no"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="simpleTrigger"/>
+            </list>
+        </property>
+    </bean>
+</beans>

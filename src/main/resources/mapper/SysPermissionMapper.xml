@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.javayuan.system.mapper.SysPermissionMapper">
+    <resultMap id="BaseResultMap" type="cn.javayuan.system.entity.SysPermission">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="percode" jdbcType="VARCHAR" property="percode"/>
+        <result column="parentid" jdbcType="INTEGER" property="parentid"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+    </resultMap>
+    <select id="selectMenuListByUserId" parameterType="integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM
+            sys_permission
+        WHERE TYPE != 2
+              AND id IN
+                  (SELECT sys_permission_id
+                   FROM
+                       sys_role_permission
+                   WHERE sys_role_id IN
+                         (SELECT sys_role_id
+                          FROM
+                              sys_user_role
+                          WHERE sys_user_id = #{id}))
+        ORDER BY sort ASC
+    </select>
+    <select id="selectPermissionListByUserId" parameterType="integer" resultType="cn.javayuan.system.entity.SysPermission">
+        SELECT *
+        FROM
+            sys_permission
+        WHERE TYPE = 2
+              AND id IN
+                  (SELECT sys_permission_id
+                   FROM
+                       sys_role_permission
+                   WHERE sys_role_id IN
+                         (SELECT sys_role_id
+                          FROM
+                              sys_user_role
+                          WHERE sys_user_id = #{id}))
+        ORDER BY sort ASC
+
+    </select>
+    <select id="selectPermissionListByUserIdAndRoleId" parameterType="integer" resultType="cn.javayuan.system.entity.SysPermission">
+        SELECT *
+        FROM
+            sys_permission
+        WHERE TYPE = 2 AND parentid=#{parentid}
+              AND id IN
+                  (SELECT sys_permission_id
+                   FROM
+                       sys_role_permission
+                   WHERE sys_role_id = #{roleid})
+        ORDER BY sort ASC
+
+    </select>
+    <select id="selectTopMenuByUserRole" parameterType="integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM
+            sys_permission
+        WHERE TYPE = 0 AND parentid = 0
+              AND id IN
+                  (SELECT sys_permission_id
+                   FROM
+                       sys_role_permission
+                   WHERE sys_role_id IN
+                         (SELECT sys_role_id
+                          FROM
+                              sys_user_role
+                          WHERE sys_user_id = #{userid}))
+        ORDER BY sort ASC
+    </select>
+    <select id="selectNotTopMenuByUserRoleAndTopMenu" parameterType="integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM
+            sys_permission
+        WHERE TYPE = 1 AND parentid = #{menuid}
+              AND id IN
+                  (SELECT sys_permission_id
+                   FROM
+                       sys_role_permission
+                   WHERE sys_role_id IN
+                         (SELECT sys_role_id
+                          FROM
+                              sys_user_role
+                          WHERE sys_user_id = #{userid}))
+        ORDER BY sort ASC
+    </select>
+    <select id="selectNotTopMenuByUserRole" parameterType="integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM
+            sys_permission
+        WHERE TYPE = 1
+              AND id IN
+                  (SELECT sys_permission_id
+                   FROM
+                       sys_role_permission
+                   WHERE sys_role_id IN
+                         (SELECT sys_role_id
+                          FROM
+                              sys_user_role
+                          WHERE sys_user_id = #{userid}))
+        ORDER BY sort ASC
+    </select>
+    <select id="selectMenuByUserRole" parameterType="integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM
+            sys_permission
+        WHERE TYPE != 2
+              AND id IN
+                  (SELECT sys_permission_id
+                   FROM
+                       sys_role_permission
+                   WHERE sys_role_id IN
+                         (SELECT sys_role_id
+                          FROM
+                              sys_user_role
+                          WHERE sys_user_id = #{userid}))
+        ORDER BY sort ASC
+    </select>
+    <select id="selectPermissionByRoleId" parameterType="integer" resultMap="BaseResultMap">
+        SELECT *
+        FROM
+          sys_permission
+        WHERE TYPE = 2
+              AND id IN
+                  (SELECT sys_permission_id
+                  FROM
+                      sys_role_permission
+                  WHERE sys_role_id=#{roleid})
+        ORDER BY sort ASC
+    </select>
+</mapper>
